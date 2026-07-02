@@ -26,6 +26,34 @@ SSH_DIR="$USER_HOME/.ssh"
 KEY_FILE="$SSH_DIR/github_key"
 SSH_CONFIG="$SSH_DIR/config"
 
+###############################################################################
+# Helper
+###############################################################################
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_ok() {
+    echo -e "${GREEN}[ OK ]${NC} $1"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[FAIL]${NC} $1"
+}
+
+
 print_header() {
     echo
     echo "==============================================================="
@@ -129,9 +157,9 @@ print_header "Checking Docker group"
 
 if getent group docker >/dev/null; then
     usermod -aG docker "$BOOTSTRAP_USER"
-    echo "User added to docker group."
+    log_ok "User added to docker group."
 else
-    echo "Docker not installed yet. Skipping."
+    log_warn "Docker not installed yet. Skipping."
 fi
 
 ###############################################################################
