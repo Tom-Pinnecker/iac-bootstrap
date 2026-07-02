@@ -14,6 +14,7 @@ set -eu
 # - Configures SSH
 # - Creates /srv directory structure
 # - Adds user to docker group
+# - Prepares CLI command tool 'iac'
 #
 # Run:
 #   curl ... | sudo bash
@@ -195,6 +196,14 @@ if getent group docker >/dev/null; then
 else
     log_warn "Docker not installed yet. Skipping."
 fi
+
+###############################################################################
+# Install CLI symlink
+###############################################################################
+
+log_info "Installing CLI tool 'iac' symlink"
+
+sudo ln -s /srv/iac/bin/iac /usr/local/bin/iac
 
 ###############################################################################
 # Finished
