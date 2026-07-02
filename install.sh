@@ -3,7 +3,7 @@
 # Copyright (c) 2026 Pinnecker Engineering
 # Licensed under the MIT License. See LICENSE file for details.
 
-set -Eeuo pipefail
+set -eu
 
 ###############################################################################
 # Bootstrap Ubuntu Server

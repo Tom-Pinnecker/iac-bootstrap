@@ -1,4 +1,4 @@
-# PE Bootstrap
+# IaC Bootstrap
 
 Minimal bootstrap utility to provision a fresh Linux server and securely connect it to the private Infrastructure-as-Code (IaC) repository.
 
@@ -11,7 +11,7 @@ This repository is intentionally small and stable.
 Always pin a version tag to ensure reproducibility.
 
 ```
-curl -fsSL https://raw.githubusercontent.com/Tom-Pinnecker/pe-bootstrap/v1.0.0/install.sh -o install.sh
+curl -fsSL https://raw.githubusercontent.com/Tom-Pinnecker/iac-bootstrap/refs/heads/main/install.sh | sh
 ```
 
 ### Review the script
