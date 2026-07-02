@@ -10,9 +10,10 @@ set -eu
 #
 # - Updates system
 # - Installs Git + Docker
-# - Creates GitHub deploy key
+# - Creates GitHub key
 # - Configures SSH
 # - Creates /srv directory structure
+# - Adds user to docker group
 #
 # Run:
 #   curl ... | sudo bash
