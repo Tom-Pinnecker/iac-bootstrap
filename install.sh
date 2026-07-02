@@ -113,6 +113,25 @@ apt install -y \
 log_ok "Docker installed"
 
 ###############################################################################
+# Docker config
+###############################################################################
+
+log_info "Checking Docker group"
+
+if getent group docker >/dev/null; then
+    usermod -aG docker "$BOOTSTRAP_USER"
+    log_ok "User added to docker group."
+else
+    log_warn "Docker not installed yet. Skipping."
+fi
+
+log_info "Ensuring Docker network 'web' exists"
+
+docker network inspect web >/dev/null 2>&1 || docker network create web
+
+log_ok "Docker network 'web' is ready"
+
+###############################################################################
 # SSH
 ###############################################################################
 
@@ -183,19 +202,6 @@ chmod 755 /srv/backups
 
 chown root:root /srv/secrets
 chmod 700 /srv/secrets
-
-###############################################################################
-# Docker group
-###############################################################################
-
-log_info "Checking Docker group"
-
-if getent group docker >/dev/null; then
-    usermod -aG docker "$BOOTSTRAP_USER"
-    log_ok "User added to docker group."
-else
-    log_warn "Docker not installed yet. Skipping."
-fi
 
 ###############################################################################
 # Install CLI symlink
