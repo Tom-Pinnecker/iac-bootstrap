@@ -53,19 +53,11 @@ log_error() {
     echo -e "${RED}[FAIL]${NC} $1"
 }
 
-
-print_header() {
-    echo
-    echo "==============================================================="
-    echo "$1"
-    echo "==============================================================="
-}
-
 ###############################################################################
 # System Update
 ###############################################################################
 
-print_header "Updating system"
+log_info "Updating system"
 
 apt update
 apt upgrade -y
@@ -74,7 +66,7 @@ apt upgrade -y
 # Install packages
 ###############################################################################
 
-print_header "Installing packages"
+log_info "Installing packages"
 
 apt install -y \
     git \
@@ -84,7 +76,7 @@ apt install -y \
 # SSH
 ###############################################################################
 
-print_header "Preparing SSH"
+log_info "Preparing SSH"
 
 mkdir -p "$SSH_DIR"
 
@@ -104,6 +96,7 @@ if [[ ! -f "$KEY_FILE" ]]; then
 
     chmod 600 "$KEY_FILE"
     chmod 644 "$KEY_FILE.pub"
+    log_ok "SSH key created successfully"
 fi
 
 touch "$SSH_CONFIG"
@@ -113,7 +106,7 @@ chown "$BOOTSTRAP_USER:$BOOTSTRAP_USER" "$SSH_CONFIG"
 
 if ! grep -q "IdentityFile ~/.ssh/github_key" "$SSH_CONFIG"; then
 
-cat >> "$SSH_CONFIG" <<'EOF'
+    cat >> "$SSH_CONFIG" <<'EOF'
 
 Host github.com
     HostName github.com
@@ -123,13 +116,15 @@ Host github.com
 
 EOF
 
+    log_ok "Added SSH config entry for github.com"
+
 fi
 
 ###############################################################################
 # Server layout
 ###############################################################################
 
-print_header "Creating server directory structure"
+log_info "Creating server directory structure"
 
 mkdir -p \
     /srv/iac \
@@ -153,7 +148,7 @@ chmod 700 /srv/secrets
 # Docker group
 ###############################################################################
 
-print_header "Checking Docker group"
+log_info "Checking Docker group"
 
 if getent group docker >/dev/null; then
     usermod -aG docker "$BOOTSTRAP_USER"
@@ -166,7 +161,7 @@ fi
 # Finished
 ###############################################################################
 
-print_header "Bootstrap complete"
+log_ok "Bootstrap complete"
 
 echo
 echo "Next steps:"
