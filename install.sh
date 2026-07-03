@@ -209,7 +209,15 @@ chmod 700 /srv/secrets
 
 log_info "Installing CLI tool 'iac' symlink"
 
-sudo ln -s /srv/iac/bin/iac /usr/local/bin/iac
+TARGET="/srv/iac/bin/iac"
+LINK="/usr/local/bin/iac"
+
+if [ -L "$LINK" ] && [ "$(readlink "$LINK")" = "$TARGET" ]; then
+    log_ok "iac CLI already installed"
+else
+    sudo ln -sfn "$TARGET" "$LINK"
+    log_ok "Installed iac CLI"
+fi
 
 ###############################################################################
 # Finished
