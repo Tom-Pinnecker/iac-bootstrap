@@ -200,7 +200,7 @@ chmod 755 /srv/data
 chown -R "$BOOTSTRAP_USER:$BOOTSTRAP_USER" /srv/backups
 chmod 755 /srv/backups
 
-chown root:root /srv/secrets
+chown "$BOOTSTRAP_USER:$BOOTSTRAP_USER" /srv/secrets
 chmod 700 /srv/secrets
 
 ###############################################################################
